@@ -116,22 +116,22 @@ public class VoiceModule extends ReactContextBaseJavaModule implements Recogniti
   @ReactMethod
   public void startSpeech(final String locale, final ReadableMap opts, final Callback callback) {
     if (!isPermissionGranted() && opts.getBoolean("REQUEST_PERMISSIONS_AUTO")) {
-      String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
-      if (this.getCurrentActivity() != null) {
-        ((PermissionAwareActivity) this.getCurrentActivity()).requestPermissions(PERMISSIONS, 1, new PermissionListener() {
-          public boolean onRequestPermissionsResult(final int requestCode,
-                                                    @NonNull final String[] permissions,
-                                                    @NonNull final int[] grantResults) {
-            boolean permissionsGranted = true;
-            for (int i = 0; i < permissions.length; i++) {
-              final boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-              permissionsGranted = permissionsGranted && granted;
-            }
-
-            return permissionsGranted;
-          }
-        });
-      }
+//      String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
+//      if (this.getCurrentActivity() != null) {
+//        ((PermissionAwareActivity) this.getCurrentActivity()).requestPermissions(PERMISSIONS, 1, new PermissionListener() {
+//          public boolean onRequestPermissionsResult(final int requestCode,
+//                                                    @NonNull final String[] permissions,
+//                                                    @NonNull final int[] grantResults) {
+//            boolean permissionsGranted = true;
+//            for (int i = 0; i < permissions.length; i++) {
+//              final boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+//              permissionsGranted = permissionsGranted && granted;
+//            }
+//
+//            return permissionsGranted;
+//          }
+//        });
+//      }
       return;
     }
 

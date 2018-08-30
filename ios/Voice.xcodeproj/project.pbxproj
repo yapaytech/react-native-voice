@@ -228,7 +228,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SYSTEM_HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native/React/Base $(SRCROOT)/../node_modules/react-native/Libraries";
+				SYSTEM_HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native/React/Base $(SRCROOT)/../../../ios/Pods/Headers/Private/React/** $(SRCROOT)/../node_modules/react-native/Libraries";
 			};
 			name = Debug;
 		};
@@ -239,7 +239,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SYSTEM_HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native/React/Base $(SRCROOT)/../node_modules/react-native/Libraries";
+				SYSTEM_HEADER_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native/React/Base $(SRCROOT)/../../../ios/Pods/Headers/Private/React/** $(SRCROOT)/../node_modules/react-native/Libraries";
 			};
 			name = Release;
 		};
