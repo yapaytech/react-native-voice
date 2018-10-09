@@ -6,7 +6,7 @@
 <p align="center">A speech-to-text library for <a href="https://facebook.github.io/react-native/">React Native.</a></p>
 
 ```sh
-npm i react-native-voice --save
+npm i git+https://github.com/yapaytech/react-native-voice.git
 ```
 
 ## Table of contents
