@@ -3,7 +3,7 @@
 
 <h1 align="center">React Native Voice</h1>
 
-<p align="center">A speech-to-text library for <a href="https://facebook.github.io/react-native/">React Native.</a></p>
+<p align="center">A speech-to-text library for <a href="https://facebook.github.io/react-native/">React Native</a> and <a href="https://expo.io/">Expo</a>.</p>
 
 ```sh
 npm i git+https://github.com/yapaytech/react-native-voice.git
@@ -141,6 +141,21 @@ Voice.onSpeechVolumeChanged(event)  | Invoked when pitch that is recognized chan
 While the included `VoiceTest` app works without explicit permissions checks and requests, it may be necessary to add a permission request for `RECORD_AUDIO` for some configurations.
 Since Android M (6.0), [user need to grant permission at runtime (and not during app installation)](https://developer.android.com/training/permissions/requesting.html).
 By default, calling the `startSpeech` method will invoke `RECORD AUDIO` permission popup to the user. This can be disabled by passing `REQUEST_PERMISSIONS_AUTO: true` in the options argument.
+
+Because of some conflict permission must be requested from javascript side. You can use expo's Permissions api for this. Example:
+```javascript
+Permissions.getAsync(Permissions.AUDIO_RECORDING)
+        .then(({ status }) => {
+          if (status !== "granted")
+            return Permissions.askAsync(Permissions.AUDIO_RECORDING);
+          return { status };
+        })
+        .then(({ status }) => {
+          if (status !== "granted") return;
+          // Start your scenario here. Like:
+          // Voice.start();
+        });
+```
 
 ### iOS
 Need to include permissions for `NSMicrophoneUsageDescription` and `NSSpeechRecognitionUsageDescription` inside Info.plist for iOS. See the included `VoiceTest` for how to handle these cases.
