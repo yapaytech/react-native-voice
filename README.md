@@ -109,16 +109,16 @@ class VoiceTest extends Component {
 
 **All methods _now_ return a `new Promise` for `async/await` compatibility.**
 
-Method Name                 | Description                                                                         | Platform
---------------------------- | ----------------------------------------------------------------------------------- | --------
-Voice.isAvailable()         | Checks whether a speech recognition service is available on the system.             | Android, iOS
-Voice.start(locale)         | Starts listening for speech for a specific locale. Returns null if no error occurs. | Android, iOS
-Voice.stop()                | Stops listening for speech. Returns null if no error occurs.                        | Android, iOS
-Voice.cancel()              | Cancels the speech recognition. Returns null if no error occurs.                    | Android, iOS
-Voice.destroy()             | Destroys the current SpeechRecognizer instance. Returns null if no error occurs.    | Android, iOS
-Voice.removeAllListeners()  | Cleans/nullifies overridden `Voice` static methods.                                 | Android, iOS
-Voice.isRecognizing()       | Return if the SpeechRecognizer is recognizing.                                      | Android, iOS
-
+Method Name                          | Description                                                                                                                                                             | Platform
+------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------
+Voice.isAvailable()                  | Checks whether a speech recognition service is available on the system.                                                                                                 | Android, iOS
+Voice.start(locale)                  | Starts listening for speech for a specific locale. Returns null if no error occurs.                                                                                     | Android, iOS
+Voice.stop()                         | Stops listening for speech. Returns null if no error occurs.                                                                                                            | Android, iOS
+Voice.cancel()                       | Cancels the speech recognition. Returns null if no error occurs.                                                                                                        | Android, iOS
+Voice.destroy()                      | Destroys the current SpeechRecognizer instance. Returns null if no error occurs.                                                                                        | Android, iOS
+Voice.removeAllListeners()           | Cleans/nullifies overridden `Voice` static methods.                                                                                                                     | Android, iOS
+Voice.isRecognizing()                | Return if the SpeechRecognizer is recognizing.                                                                                                                          | Android, iOS
+Voice.getSpeechRecognitionServices() | Returns a list of the speech recognition engines available on the device. (Example: `['com.google.android.googlequicksearchbox']` if Google is the only one available.) | Android
 <h2 align="center">Events</h2>
 
 <p align="center">Callbacks that are invoked when a native event emitted.</p>
@@ -142,19 +142,21 @@ While the included `VoiceTest` app works without explicit permissions checks and
 Since Android M (6.0), [user need to grant permission at runtime (and not during app installation)](https://developer.android.com/training/permissions/requesting.html).
 By default, calling the `startSpeech` method will invoke `RECORD AUDIO` permission popup to the user. This can be disabled by passing `REQUEST_PERMISSIONS_AUTO: true` in the options argument.
 
-Because of some conflict permission must be requested from javascript side. You can use expo's Permissions api for this. Example:
-```javascript
-Permissions.getAsync(Permissions.AUDIO_RECORDING)
-        .then(({ status }) => {
-          if (status !== "granted")
-            return Permissions.askAsync(Permissions.AUDIO_RECORDING);
-          return { status };
-        })
-        .then(({ status }) => {
-          if (status !== "granted") return;
-          // Start your scenario here. Like:
-          // Voice.start();
-        });
+If you're running an ejected expo/expokit app, you may run into issues with permissions on Android and get the following error `host.exp.exponent.MainActivity cannot be cast to com.facebook.react.ReactActivity
+startSpeech`. This can be resolved by prompting for permssion using the `expo-permission` package before starting recogntion. 
+```js
+import { Permissions } from "expo";
+async componentDidMount() {
+	const { status, expires, permissions } = await Permissions.askAsync(
+		Permissions.AUDIO_RECORDING
+	);
+	if (status !== "granted") {
+		//Permissions not granted. Don't show the start recording button because it will cause problems if it's pressed.
+		this.setState({showRecordButton: false});
+	} else {
+		this.setState({showRecordButton: true});
+	}
+}
 ```
 
 ### iOS
